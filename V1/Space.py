@@ -31,11 +31,12 @@ class Space:
             self.color = (138,43,226)
 
     def draw(self):
-        if self.isSelected:
-            pygame.draw.rect(self.surface, (75,75,75),(self.x * self.squareSize,self.y * self.squareSize,self.squareSize,self.squareSize))
-        else:
-            pygame.draw.rect(self.surface, (0,0,0),(self.x * self.squareSize,self.y * self.squareSize,self.squareSize,self.squareSize))
-        pygame.draw.circle(self.surface, self.color,(self.x * self.squareSize + self.squareSize/2,self.y * self.squareSize + self.squareSize/2),self.squareSize/3)
+        if self.jewel != 0:
+            if self.isSelected:
+                pygame.draw.circle(self.surface, (200,200,200),(self.x * self.squareSize + self.squareSize/2,self.y * self.squareSize + self.squareSize/2),self.squareSize/2.5)
+            else:
+                pygame.draw.circle(self.surface, (0,0,0),(self.x * self.squareSize + self.squareSize/2,self.y * self.squareSize + self.squareSize/2),self.squareSize/2.5)
+            pygame.draw.circle(self.surface, self.color,(self.x * self.squareSize + self.squareSize/2,self.y * self.squareSize + self.squareSize/2),self.squareSize/3)
         hSurf = SquareFont.render(str(self.jewel), True, (255,255,255))
         #self.surface.blit(hSurf,(self.x * self.squareSize + self.squareSize/2.5 , self.y * self.squareSize + self.squareSize/3))
 

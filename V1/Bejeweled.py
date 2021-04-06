@@ -3,17 +3,22 @@ from Space import Space
 import random
 import math
 import time
+import os
 
-WIDTH,HEIGHT = 1000,1000 
+WIDTH,HEIGHT = 1000,1000
 WINDOW = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption("Bejeweled")
 FPS = 60
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 rows,cols = 7,7
-squareSize = max(WIDTH,HEIGHT)/max(rows,cols)
+squareSize = WIDTH/cols
 Selected = None
 AnimationSpeed = 0.005
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+bgPath = os.path.join(current_dir, "BejeweledBackground.png")
+bgImage = pygame.image.load(bgPath)
 
 def create2DArray():
     squares = []
@@ -28,8 +33,6 @@ def create2DArray():
 squares = create2DArray()
 
 def main():
-    
-    #fillEmptySpaces()
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -49,8 +52,10 @@ def main():
 
 def draw_all():
     update_display()
-    draw_window()
+    WINDOW.blit(bgImage,(0,0))
+    #draw_window()
     draw_board()
+    
 
 def draw_board():
     for x in range(rows):
@@ -137,7 +142,7 @@ def RemoveMatches(checks):
             squares[j.x][j.y].setJewel(0)
 
 def swapAnim(Space1,Space2,col1,col2):
-    AnimAmount = 3
+    AnimAmount = 7.5
     loopX = Space1.x * Space1.squareSize + Space1.squareSize/2
     loopY = Space1.y * Space1.squareSize + Space1.squareSize/2
     YoopX = Space2.x * Space2.squareSize + Space2.squareSize/2
@@ -149,14 +154,19 @@ def swapAnim(Space1,Space2,col1,col2):
 
     if Space2.x < Space1.x:
         while SP2X < loopX:
+            pygame.draw.circle(Space1.surface, (0,0,0),(loopX,loopY),Space1.squareSize/2.5)
+            pygame.draw.circle(Space2.surface, (0,0,0),(YoopX,YoopY),Space2.squareSize/2.5)
             pygame.draw.circle(Space1.surface, col1,(loopX,loopY),Space1.squareSize/3)
             pygame.draw.circle(Space2.surface, col2,(YoopX,YoopY),Space2.squareSize/3)
+            
             loopX -= AnimAmount
             YoopX += AnimAmount
             time.sleep(AnimationSpeed)
             draw_all()
     if Space2.x > Space1.x:
         while SP2X > loopX:
+            pygame.draw.circle(Space1.surface, (0,0,0),(loopX,loopY),Space1.squareSize/2.5)
+            pygame.draw.circle(Space2.surface, (0,0,0),(YoopX,YoopY),Space2.squareSize/2.5)
             pygame.draw.circle(Space1.surface, col1,(loopX,loopY),Space1.squareSize/3)
             pygame.draw.circle(Space2.surface, col2,(YoopX,YoopY),Space2.squareSize/3)
             loopX += AnimAmount
@@ -165,6 +175,8 @@ def swapAnim(Space1,Space2,col1,col2):
             draw_all()
     if Space2.y < Space1.y:
         while SP2Y < loopY:
+            pygame.draw.circle(Space1.surface, (0,0,0),(loopX,loopY),Space1.squareSize/2.5)
+            pygame.draw.circle(Space2.surface, (0,0,0),(YoopX,YoopY),Space2.squareSize/2.5)
             pygame.draw.circle(Space1.surface, col1,(loopX,loopY),Space1.squareSize/3)
             pygame.draw.circle(Space2.surface, col2,(YoopX,YoopY),Space2.squareSize/3)
             loopY -= AnimAmount
@@ -173,6 +185,8 @@ def swapAnim(Space1,Space2,col1,col2):
             draw_all()
     if Space2.y > Space1.y:
         while SP2Y > loopY:
+            pygame.draw.circle(Space1.surface, (0,0,0),(loopX,loopY),Space1.squareSize/2.5)
+            pygame.draw.circle(Space2.surface, (0,0,0),(YoopX,YoopY),Space2.squareSize/2.5)
             pygame.draw.circle(Space1.surface, col1,(loopX,loopY),Space1.squareSize/3)
             pygame.draw.circle(Space2.surface, col2,(YoopX,YoopY),Space2.squareSize/3)
             loopY += AnimAmount
@@ -181,7 +195,7 @@ def swapAnim(Space1,Space2,col1,col2):
             draw_all()
 
 def dropDownJewelsAnim(Space1,Space2,col1):
-    AnimAmount = 10
+    AnimAmount = 25
     loopX = Space1.x * Space1.squareSize + Space1.squareSize/2
     loopY = Space1.y * Space1.squareSize + Space1.squareSize/2
     YoopX = Space2.x * Space2.squareSize + Space2.squareSize/2
@@ -191,20 +205,20 @@ def dropDownJewelsAnim(Space1,Space2,col1):
     SP2Y = YoopY
 
     while SP2Y > loopY:
+        pygame.draw.circle(Space1.surface, (0,0,0),(loopX,loopY),Space1.squareSize/2.5)
         pygame.draw.circle(Space1.surface, col1,(loopX,loopY),Space1.squareSize/3)
         loopY += AnimAmount
         time.sleep(AnimationSpeed)
         draw_all()
 
 def fillEmptySpacesAnim(Space,col):
-    AnimAmount = 10
+    AnimAmount = 25
     loopX = Space.x * Space.squareSize + Space.squareSize/2
     loopY = 0 - Space.squareSize/3
     YoopY = Space.y * Space.squareSize + Space.squareSize/2
-    print(col)
 
     while YoopY > loopY:
-        pygame.draw.circle(Space.surface, col,(loopX,loopY),Space.squareSize/3)
+        pygame.draw.circle(Space.surface, (0,0,0),(loopX,loopY),Space.squareSize/2.5)
         pygame.draw.circle(Space.surface, col,(loopX,loopY),Space.squareSize/3)
         loopY += AnimAmount
         time.sleep(AnimationSpeed)
