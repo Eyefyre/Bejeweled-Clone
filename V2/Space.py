@@ -45,9 +45,6 @@ class Space:
             return YellowImage
         if col == 5:
             return PurpleImage
-            
-    def Space():
-        print("Space")
 
     def draw(self):
         if self.jewel != 0:

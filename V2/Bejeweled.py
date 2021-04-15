@@ -482,5 +482,4 @@ def getImage(col):
             return PurpleImage
 
 if __name__ == "__main__":
-    Space.Space()
     main()
